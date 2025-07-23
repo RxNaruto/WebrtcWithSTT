@@ -374,8 +374,13 @@ export const Receiver = () => {
                                                 : 'bg-slate-600 hover:bg-slate-500 text-white'
                                         } ${!isSupported ? 'opacity-50 cursor-not-allowed' : ''}`}
                                     >
-                                        {isSpeechEnabled ? 'Speech Recognition: ON' : 'Enable Speech Recognition'}
+                                        {isSpeechEnabled ? 'Live Chat: ON' : 'Enable Live Chat'}
                                     </button>
+                                    {!isSupported && (
+                                        <p className="text-xs text-red-400 mt-1 text-center">
+                                            Speech recognition not supported in this browser
+                                        </p>
+                                    )}
                                 </div>
                                 
                                 {isSpeechEnabled && (

@@ -1,5 +1,5 @@
 import React from 'react';
-import { MessageSquare, User, Users } from 'lucide-react';
+import { MessageSquare, User, Users, Mic, MicOff } from 'lucide-react';
 
 interface TranscriptionMessage {
   id: string;
@@ -25,57 +25,74 @@ export const TranscriptionPanel: React.FC<TranscriptionPanelProps> = ({
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center space-x-2">
           <MessageSquare className="w-5 h-5 text-white" />
-          <h3 className="text-white font-semibold">Live Transcription</h3>
+          <h3 className="text-white font-semibold">Live Chat</h3>
         </div>
         <button
           onClick={onToggleListening}
           className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
             isListening
-              ? 'bg-red-600 hover:bg-red-500 text-white'
-              : 'bg-green-600 hover:bg-green-500 text-white'
+              ? 'bg-red-600 hover:bg-red-500 text-white flex items-center space-x-1'
+              : 'bg-green-600 hover:bg-green-500 text-white flex items-center space-x-1'
           }`}
         >
-          {isListening ? 'Stop' : 'Start'}
+          {isListening ? (
+            <>
+              <MicOff className="w-3 h-3" />
+              <span>Stop</span>
+            </>
+          ) : (
+            <>
+              <Mic className="w-3 h-3" />
+              <span>Start</span>
+            </>
+          )}
         </button>
       </div>
       
-      <div className="flex-1 overflow-y-auto space-y-2 max-h-64">
+      <div className="flex-1 overflow-y-auto space-y-3 max-h-80 pr-2">
         {transcriptions.length === 0 ? (
           <div className="text-center text-slate-400 py-8">
             <MessageSquare className="w-8 h-8 mx-auto mb-2 opacity-50" />
-            <p className="text-sm">Speech transcription will appear here</p>
+            <p className="text-sm">Speech will appear as text messages here</p>
           </div>
         ) : (
           transcriptions.map((transcription) => (
             <div
               key={transcription.id}
-              className={`p-3 rounded-lg ${
+              className={`flex ${
                 transcription.speaker === 'local'
-                  ? 'bg-blue-600/20 border-l-4 border-blue-500'
-                  : 'bg-green-600/20 border-l-4 border-green-500'
+                  ? 'justify-end'
+                  : 'justify-start'
               }`}
             >
-              <div className="flex items-center space-x-2 mb-1">
-                {transcription.speaker === 'local' ? (
-                  <User className="w-4 h-4 text-blue-400" />
-                ) : (
-                  <Users className="w-4 h-4 text-green-400" />
-                )}
-                <span className={`text-xs font-medium ${
-                  transcription.speaker === 'local' ? 'text-blue-400' : 'text-green-400'
-                }`}>
-                  {transcription.speaker === 'local' ? 'You' : 'Remote'}
-                </span>
-                <span className="text-xs text-slate-400">
-                  {transcription.timestamp.toLocaleTimeString()}
-                </span>
-              </div>
-              <p className={`text-sm ${
-                transcription.isFinal ? 'text-white' : 'text-slate-300 italic'
+              <div className={`max-w-xs lg:max-w-md px-4 py-2 rounded-2xl ${
+                transcription.speaker === 'local'
+                  ? 'bg-blue-600 text-white rounded-br-md'
+                  : 'bg-slate-700 text-white rounded-bl-md'
               }`}>
-                {transcription.text}
-                {!transcription.isFinal && <span className="animate-pulse">...</span>}
-              </p>
+                <div className="flex items-center space-x-2 mb-1">
+                  {transcription.speaker === 'local' ? (
+                    <User className="w-3 h-3" />
+                  ) : (
+                    <Users className="w-3 h-3" />
+                  )}
+                  <span className="text-xs opacity-75">
+                    {transcription.speaker === 'local' ? 'You' : 'Remote'}
+                  </span>
+                  <span className="text-xs opacity-50">
+                    {transcription.timestamp.toLocaleTimeString([], { 
+                      hour: '2-digit', 
+                      minute: '2-digit' 
+                    })}
+                  </span>
+                </div>
+                <p className={`text-sm ${
+                  transcription.isFinal ? '' : 'italic opacity-75'
+                }`}>
+                  {transcription.text}
+                  {!transcription.isFinal && <span className="animate-pulse ml-1">...</span>}
+                </p>
+              </div>
             </div>
           ))
         )}

@@ -13,7 +13,6 @@ interface VideoControlsProps {
 export const VideoControls: React.FC<VideoControlsProps> = ({
   isAudioEnabled,
   isVideoEnabled,
-
   onToggleAudio,
   onToggleVideo,
   onEndCall,

@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 
-
 interface UseSpeechRecognitionProps {
   onTranscription: (text: string, isFinal: boolean) => void;
   isEnabled: boolean;
@@ -19,7 +18,9 @@ export const useSpeechRecognition = ({ onTranscription, isEnabled }: UseSpeechRe
       recognitionRef.current = new SpeechRecognition();
       
       const recognition = recognitionRef.current;
-      if(recognition==null)return;
+      if(!recognition){
+        return;
+      }
       recognition.continuous = true;
       recognition.interimResults = true;
       recognition.lang = 'en-US';
