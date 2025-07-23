@@ -1,5 +1,5 @@
 import React from 'react';
-import { Mic, MicOff, Video, VideoOff, Phone, PhoneOff } from 'lucide-react';
+import { Mic, MicOff, Video, VideoOff, PhoneOff } from 'lucide-react';
 
 interface VideoControlsProps {
   isAudioEnabled: boolean;
@@ -13,7 +13,7 @@ interface VideoControlsProps {
 export const VideoControls: React.FC<VideoControlsProps> = ({
   isAudioEnabled,
   isVideoEnabled,
-  isConnected,
+
   onToggleAudio,
   onToggleVideo,
   onEndCall,
