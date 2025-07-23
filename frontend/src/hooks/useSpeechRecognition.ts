@@ -1,12 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 
-interface TranscriptionMessage {
-  id: string;
-  text: string;
-  speaker: 'local' | 'remote';
-  timestamp: Date;
-  isFinal: boolean;
-}
 
 interface UseSpeechRecognitionProps {
   onTranscription: (text: string, isFinal: boolean) => void;
