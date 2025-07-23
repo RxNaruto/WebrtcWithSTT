@@ -18,9 +18,7 @@ export const useSpeechRecognition = ({ onTranscription, isEnabled }: UseSpeechRe
       recognitionRef.current = new SpeechRecognition();
       
       const recognition = recognitionRef.current;
-      if(!recognition){
-        return;
-      }
+      if(!recognition)return;
       recognition.continuous = true;
       recognition.interimResults = true;
       recognition.lang = 'en-US';
