@@ -149,10 +149,16 @@ export const Sender = () => {
 
         try {
             // Fetch dynamic ICE servers
-            const response = await fetch("https://mycapstoneturnserver.metered.live/api/v1/turn/credentials?apiKey=49c30365ef3c75870c2e02da41af28ba0a40");
-            const iceServers = await response.json();
-
-            const peerConnection = new RTCPeerConnection({ iceServers });
+            const peerConnection = new RTCPeerConnection({
+    iceServers: [
+        { urls: 'stun:stun.l.google.com:19302' },
+        {
+            urls: 'turn:myturnserver.rithkchaudharytechnologies.xyz:3478',
+            username: 'rithkturnserver',
+            credential: '8570'
+        }
+    ]
+});
             peerConnectionRef.current = peerConnection;
 
             peerConnection.onicecandidate = (event) => {
